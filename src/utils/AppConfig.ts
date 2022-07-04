@@ -1,7 +1,6 @@
 export const AppConfig = {
-  site_name: 'Typescript Template',
-  title: 'Typescript base template to start any project',
-  description:
-    'Typescript based template with NextTS, React, TailwindCSS, lint, Metadata, Folder structure, and basic setup time!',
+  site_name: 'Lifecycle',
+  title: 'Lifecycle',
+  description: 'The only recycling app that you will ever need!',
   locale: 'en',
 };
