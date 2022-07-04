@@ -1,41 +1,47 @@
 import React from 'react';
 
 import {
-  GoogleMap,
-  Marker,
-  InfoWindow,
-  useLoadScript,
-} from '@react-google-maps/api';
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from '@reach/combobox';
+import { GoogleMap, useLoadScript, InfoWindow } from '@react-google-maps/api';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete';
 
-import { eWaste } from './Electronics_Drop_Off_NYC';
+import '@reach/combobox/styles.css';
 import MapStyle from './mapStyles';
 
-// const libraries = ['places'];
-const containerStyle = {
-  width: '1200px',
+/// /////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////
+const libraries = ['places'];
+const mapContainerStyle = {
   height: '800px',
+  width: '1200px',
 };
-
 const options = {
   styles: MapStyle,
   disableDefaultUI: true,
   zoomControl: true,
 };
-
 const center = {
   lat: 40.7703,
   lng: -73.9883,
 };
 
-// const geoError = console.log;
-
 // function App() {
 //   const [data, setData] = React.useState(null);
 
+//   //   React.useEffect(() => {
+//   //     fetch("/api")
+//   //       .then((res) => res.json())
+//   //       .then((data) => setData(data.message));
+//   //   }, []);
+//   // }
 //   React.useEffect(() => {
 //     fetch('http://localhost:3003/api')
 //       .then((response) => response.json())
@@ -47,7 +53,7 @@ const center = {
 function Locate({ panTo }) {
   return (
     <button
-      className=""
+      className=" absolute right-4 top-4 z-10 flex w-8"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -60,7 +66,7 @@ function Locate({ panTo }) {
         );
       }}
     >
-      <img src="/compass.svg" alt="compass" />
+      <img src="/compass.svg" alt="Locate yourself" />
     </button>
   );
 }
@@ -68,101 +74,105 @@ function Locate({ panTo }) {
 // Search function with input and list result
 function Search({ panTo }) {
   const {
-    // eslint-disable-next-line unused-imports/no-unused-vars
     ready,
-    // eslint-disable-next-line unused-imports/no-unused-vars
     value,
-    // suggestions: { status, data },
+    suggestions: { status, data },
     setValue,
     clearSuggestions,
   } = usePlacesAutocomplete({
     requestOptions: {
-      location: { lat: () => 40.7703, lng: () => -73.9883 },
+      location: new google.maps.LatLng(40.7703, -73.9883),
       radius: 50 * 1000,
     },
   });
 
   // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
 
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  const handleInput = (e: { target: { value: string } }) => {
+  const handleInput = (e) => {
     setValue(e.target.value);
   };
 
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  const handleSelect = async (address: string) => {
+  const handleSelect = async (address) => {
     setValue(address, false);
     clearSuggestions();
 
     try {
       const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
+      const { lat, lng } = getLatLng(results[0]);
       panTo({ lat, lng });
     } catch (error) {
-      geoError('😱 Error: ', error);
+      // eslint-disable-next-line no-console
+      console.log('😱 Error: ', error);
     }
   };
+
+  return (
+    <div id="search">
+      <Combobox onSelect={handleSelect}>
+        <ComboboxInput
+          value={value}
+          onChange={handleInput}
+          disabled={!ready}
+          placeholder="Search your location here"
+        />
+        <ComboboxPopover>
+          <ComboboxList>
+            {status === 'OK' &&
+              data.map(({ id, description }) => (
+                <ComboboxOption key={id} value={description} />
+              ))}
+          </ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
+    </div>
+  );
 }
 
-export default function Maps() {
+export default function Maps(this: any) {
   const { isLoaded, loadError } = useLoadScript({
-    id: 'google-map-script',
-    libraries: [],
     googleMapsApiKey: 'AIzaSyBL9zPZXbqYtJWC-my7mrTNVfrQLJ4g2Xw',
+    libraries,
   });
-
   const [, setMarkers] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  // const [map, setMap] = React.useState(null);
 
   // This hook is not going to be used
   // This hook creates a marker whenever the user clicks and add info to the infobox.
-  const onMapClick = React.useCallback((_e: any) => {
+  const onMapClick = React.useCallback((_e) => {
     setMarkers((current) => [...current]);
   }, []);
 
-  const mapRef = React.useRef();
-  const onMapLoad = React.useCallback((map: any) => {
+  const mapRef = React.useRef<GoogleMap | null>(null);
+  const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
   }, []);
   // Hook to move the maps depending on user input location and zoom to that location
   const panTo = React.useCallback(({ lat, lng }) => {
-    mapRef?.current?.panTo({ lat, lng });
-    mapRef?.current?.setZoom(14);
+    const map = mapRef.current;
+    if (!map) return; // No map (yet)? (This return narrows the type of `map` from `MyMap | null` to just `MyMap`, so the following work.)
+    map.panTo({ lat, lng });
+    map.setZoom(14);
   }, []);
 
-  // Error logs
   if (loadError) return 'Error';
   if (!isLoaded) return 'Loading...';
 
-  // const onLoad = React.useCallback(function callback(map) {
-  //   const bounds = new window.google.maps.LatLngBounds(center);
-  //   map.fitBounds(bounds);
-  //   setMap(map);
-  // }, []);
-
-  // const onUnmount = React.useCallback(function callback(map) {
-  //   setMap(null);
-  // }, []);
-
-  return isLoaded ? (
-    <div className="flex justify-center object-center">
+  return (
+    <div className=" justify-center object-center">
       <Locate panTo={panTo} />
       <Search panTo={panTo} />
 
       <GoogleMap
-        id="Recycle-map"
-        mapContainerStyle={containerStyle}
+        id="map"
+        // className="ml-10 content-center justify-center"
+        mapContainerStyle={mapContainerStyle}
+        zoom={10}
         center={center}
         options={options}
         onClick={onMapClick}
-        zoom={10}
         onLoad={onMapLoad}
-        // onUnmount={onUnmount}
       >
-        {/* Child components, such as markers, info windows, etc. */}
-        {eWaste.features.map((dropOff) => (
+        {/* {eWaste.features.map((dropOff) => (
           <Marker
             key={dropOff.properties.zipcode}
             position={{
@@ -179,12 +189,13 @@ export default function Maps() {
               scaledSize: new window.google.maps.Size(30, 30),
             }}
           />
-        ))}
+        ))} */}
+
         {selected ? (
           <InfoWindow
             position={{
-              lat: selected.geometry.coordinates[1],
-              lng: selected.geometry.coordinates[0],
+              lat: this.selected.geometry.coordinates[1],
+              lng: this.selected.geometry.coordinates[0],
             }}
             onCloseClick={() => {
               setSelected(null);
@@ -195,22 +206,17 @@ export default function Maps() {
                 <span role="img" aria-label="Recycling">
                   ♻️
                 </span>{' '}
-                {selected.properties.dropoff_sitename}{' '}
+                {this.selected.properties.dropoff_sitename}{' '}
                 <span role="img" aria-label="Recycling">
                   ♻️
                 </span>
               </h2>
-              <p> Address: {selected.properties.address} </p>
+              <p> Address: {this.selected.properties.address} </p>
               <p> </p>
             </div>
           </InfoWindow>
         ) : null}
-        ;<></>
       </GoogleMap>
     </div>
-  ) : (
-    <></>
   );
 }
-
-// export default React.memo(Maps);
