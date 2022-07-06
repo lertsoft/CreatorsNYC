@@ -25,11 +25,14 @@ import Electronics from './Electronics_Drop_Off_NYC';
 /// /////////////////////////////////////////////////////////////
 const libraries = ['places'];
 const mapContainerStyle = {
-  position: 'absolute',
-  top: '120px',
-  left: '10px',
-  right: '10px',
-  bottom: '100px',
+  width: 'device-width',
+  // width: '80vh',
+  height: '80vh',
+  // position: 'absolute',
+  // top: '120px',
+  // left: '10px',
+  // right: '10px',
+  // bottom: '100px',
 };
 const options = {
   styles: MapStyle,
@@ -45,7 +48,7 @@ const center = {
 function Locate({ panTo }) {
   return (
     <button
-      className=" absolute right-8 top-6 z-10 flex w-8 mt-28 self"
+      className=" absolute right-8 top-10 z-10  w-8"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -169,7 +172,7 @@ export default function MyMaps() {
 
   return (
     <div
-      className=" justify-center object-center"
+      className=" relative justify-center object-center"
       // style={{
       //   height: 350,
       //   width: '100%',

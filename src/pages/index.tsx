@@ -21,10 +21,8 @@ export default function Index(): JSX.Element {
     >
       {
         <div className="grid gap-20 bg-white">
-          <div className=" display: inline-grid grid-rows-2 ">
+          <div className=" display: inline-grid grid-rows-1 ">
             <MyMaps />
-          </div>
-          <div className=" display: box-content  inline-grid ">
             {/* <FaqPage /> */}
           </div>
         </div>
