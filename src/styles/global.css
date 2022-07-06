@@ -32,3 +32,9 @@ a:hover {
 .navbar :global(li:not(:last-child)) {
   @apply mr-5;
 }
+
+@media screen and (max-width: 900px) {
+  #map {
+    width: 600px;
+  }
+}

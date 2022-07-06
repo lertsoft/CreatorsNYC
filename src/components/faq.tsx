@@ -44,7 +44,7 @@ export const FaqPage = () => {
   return (
     <>
       <div className="">
-        <h2 className=" align-text-top text-lg font-bold" id="#FAQ">
+        <h2 className="text-lg font-bold" id="FAQ">
           Frequently Ask Questions
         </h2>
 

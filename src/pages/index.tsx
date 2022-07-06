@@ -5,10 +5,10 @@ import React from 'react';
 import { Meta } from '@/layout/Meta';
 import { Main } from '@/templates/Main';
 
-import { FaqPage } from '../components/faq';
-import Maps from '../components/maps/maps';
+// eslint-disable-next-line import/extensions
+import MyMaps from '../components/maps/maps';
 
-export default function Index() {
+export default function Index(): JSX.Element {
   return (
     <Main
       meta={
@@ -19,11 +19,16 @@ export default function Index() {
       }
       logo={'Lifecycle'}
     >
-      <div className="inset-y-4 grid gap-10 bg-white">
-        <></>
-        <Maps />
-        <FaqPage />
-      </div>
+      {
+        <div className="grid gap-20 bg-white">
+          <div className=" display: inline-grid grid-rows-2 ">
+            <MyMaps />
+          </div>
+          <div className=" display: box-content  inline-grid ">
+            {/* <FaqPage /> */}
+          </div>
+        </div>
+      }
     </Main>
   );
 }

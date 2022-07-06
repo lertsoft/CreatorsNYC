@@ -1,5 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
-
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  InfoWindow,
+} from '@react-google-maps/api';
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from 'use-places-autocomplete';
 import {
   Combobox,
   ComboboxInput,
@@ -7,21 +17,19 @@ import {
   ComboboxList,
   ComboboxOption,
 } from '@reach/combobox';
-import { GoogleMap, useLoadScript, InfoWindow } from '@react-google-maps/api';
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from 'use-places-autocomplete';
 
 import '@reach/combobox/styles.css';
 import MapStyle from './mapStyles';
+import Electronics from './Electronics_Drop_Off_NYC';
 
-/// /////////////////////////////////////////////////////////////
 /// /////////////////////////////////////////////////////////////
 const libraries = ['places'];
 const mapContainerStyle = {
-  height: '800px',
-  width: '1200px',
+  position: 'absolute',
+  top: '120px',
+  left: '10px',
+  right: '10px',
+  bottom: '100px',
 };
 const options = {
   styles: MapStyle,
@@ -33,27 +41,11 @@ const center = {
   lng: -73.9883,
 };
 
-// function App() {
-//   const [data, setData] = React.useState(null);
-
-//   //   React.useEffect(() => {
-//   //     fetch("/api")
-//   //       .then((res) => res.json())
-//   //       .then((data) => setData(data.message));
-//   //   }, []);
-//   // }
-//   React.useEffect(() => {
-//     fetch('http://localhost:3003/api')
-//       .then((response) => response.json())
-//       .then((data) => console.log(data), setData(data.ComboboxInput));
-//   }, []);
-// }
-
 // Get location from the browser function
 function Locate({ panTo }) {
   return (
     <button
-      className=" absolute right-4 top-4 z-10 flex w-8"
+      className=" absolute right-8 top-6 z-10 flex w-8 mt-28 self"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -81,7 +73,7 @@ function Search({ panTo }) {
     clearSuggestions,
   } = usePlacesAutocomplete({
     requestOptions: {
-      location: new google.maps.LatLng(40.7703, -73.9883),
+      location: { lat: () => 40.7703, lng: () => -73.9883 },
       radius: 50 * 1000,
     },
   });
@@ -98,7 +90,7 @@ function Search({ panTo }) {
 
     try {
       const results = await getGeocode({ address });
-      const { lat, lng } = getLatLng(results[0]);
+      const { lat, lng } = await getLatLng(results[0]);
       panTo({ lat, lng });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -107,13 +99,13 @@ function Search({ panTo }) {
   };
 
   return (
-    <div id="search">
+    <div className="search">
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
           value={value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder="Search your location here"
+          placeholder="Search your location here!"
         />
         <ComboboxPopover>
           <ComboboxList>
@@ -128,9 +120,25 @@ function Search({ panTo }) {
   );
 }
 
-export default function Maps(this: any) {
+// function App() {
+//   const [data, setData] = React.useState(null);
+
+//   //   React.useEffect(() => {
+//   //     fetch("/api")
+//   //       .then((res) => res.json())
+//   //       .then((data) => setData(data.message));
+//   //   }, []);
+//   // }
+//   React.useEffect(() => {
+//     fetch('http://localhost:3003/api')
+//       .then((response) => response.json())
+//       .then(() => console.log(data), setData(data.ComboboxInput));
+//   }, [data, data.ComboboxInput]);
+// }
+
+export default function MyMaps() {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyBL9zPZXbqYtJWC-my7mrTNVfrQLJ4g2Xw',
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API,
     libraries,
   });
   const [, setMarkers] = React.useState([]);
@@ -138,33 +146,45 @@ export default function Maps(this: any) {
 
   // This hook is not going to be used
   // This hook creates a marker whenever the user clicks and add info to the infobox.
-  const onMapClick = React.useCallback((_e) => {
+  const onMapClick = React.useCallback(() => {
     setMarkers((current) => [...current]);
   }, []);
 
-  const mapRef = React.useRef<GoogleMap | null>(null);
+  const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
   }, []);
   // Hook to move the maps depending on user input location and zoom to that location
   const panTo = React.useCallback(({ lat, lng }) => {
-    const map = mapRef.current;
-    if (!map) return; // No map (yet)? (This return narrows the type of `map` from `MyMap | null` to just `MyMap`, so the following work.)
-    map.panTo({ lat, lng });
-    map.setZoom(14);
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(14);
   }, []);
 
-  if (loadError) return 'Error';
-  if (!isLoaded) return 'Loading...';
+  if (loadError) {
+    return <div>Map cannot be loaded right now, sorry.</div>;
+  }
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className=" justify-center object-center">
+    <div
+      className=" justify-center object-center"
+      // style={{
+      //   height: 350,
+      //   width: '100%',
+      //   display: 'flex',
+      //   flexFlow: 'row nowrap',
+      //   justifyContent: 'center',
+      //   padding: 0,
+      // }}
+    >
       <Locate panTo={panTo} />
       <Search panTo={panTo} />
 
       <GoogleMap
         id="map"
-        // className="ml-10 content-center justify-center"
+        className="mapContainerStyle"
         mapContainerStyle={mapContainerStyle}
         zoom={10}
         center={center}
@@ -172,7 +192,7 @@ export default function Maps(this: any) {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {/* {eWaste.features.map((dropOff) => (
+        {Electronics.features.map((dropOff) => (
           <Marker
             key={dropOff.properties.zipcode}
             position={{
@@ -189,13 +209,13 @@ export default function Maps(this: any) {
               scaledSize: new window.google.maps.Size(30, 30),
             }}
           />
-        ))} */}
+        ))}
 
         {selected ? (
           <InfoWindow
             position={{
-              lat: this.selected.geometry.coordinates[1],
-              lng: this.selected.geometry.coordinates[0],
+              lat: selected.geometry.coordinates[1],
+              lng: selected.geometry.coordinates[0],
             }}
             onCloseClick={() => {
               setSelected(null);
@@ -206,12 +226,12 @@ export default function Maps(this: any) {
                 <span role="img" aria-label="Recycling">
                   ♻️
                 </span>{' '}
-                {this.selected.properties.dropoff_sitename}{' '}
+                {selected.properties.dropoff_sitename}{' '}
                 <span role="img" aria-label="Recycling">
                   ♻️
                 </span>
               </h2>
-              <p> Address: {this.selected.properties.address} </p>
+              <p> Address: {selected.properties.address} </p>
               <p> </p>
             </div>
           </InfoWindow>

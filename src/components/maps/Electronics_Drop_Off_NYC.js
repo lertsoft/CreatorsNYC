@@ -1821,4 +1821,4 @@ const Electronics = {
     },
   ],
 };
-export const eWaste = Electronics;
+export default Electronics;

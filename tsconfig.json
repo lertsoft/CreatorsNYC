@@ -42,5 +42,12 @@
     }
   },
   "exclude": ["./out/**/*", "./node_modules/**/*"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/maps/mapStyles.js",
+    "src/components/maps/Electronics_Drop_Off_NYC.js",
+    "src/components/maps/maps.jsx"
+  ]
 }
