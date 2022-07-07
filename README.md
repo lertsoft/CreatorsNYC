@@ -1,4 +1,4 @@
-# Boilerplate and Starter for Next JS 12+, Tailwind CSS 3 and TypeScript
+## Lifecycle
 
 🚀 Boilerplate and Starter for Next.js, Tailwind CSS and TypeScript ⚡️ Made with developer experience first: Next.js, TypeScript, ESLint, Prettier, Husky, Lint-Staged, VSCode, Netlify, PostCSS, Tailwind CSS.
 
@@ -46,8 +46,6 @@ Built-in feature from Next.js:
 Run the following command on your local environment:
 
 ```
-git clone --depth=1 https://github.com/lertsoft/typescript-ventures.git my-project-name
-cd my-project-name
 npm install
 ```
 
@@ -67,6 +65,8 @@ Open http://localhost:3000 with your favorite browser to see your project.
 │   └── assets
 │       └── images           # Image used by default template
 ├── src
+|   ├── components           # App components
+|   |   └── maps             # Maps styles, data and functions
 │   ├── layout               # Atomic layout components
 │   ├── pages                # Next JS pages
 │   ├── styles               # PostCSS style folder with Tailwind
@@ -75,15 +75,6 @@ Open http://localhost:3000 with your favorite browser to see your project.
 ├── tailwind.config.js       # Tailwind CSS configuration
 └── tsconfig.json            # TypeScript configuration
 ```
-
-### Customization
-
-You can easily configure Next.tsx Boilerplate. Please change the following file:
-
-- `public/apple-touch-icon.png`, `public/favicon.ico`, `public/favicon-16x16.png` and `public/favicon-32x32.png`: your website favicon, you can generate from https://favicon.io/favicon-converter/
-- `src/styles/global.css`: your CSS file using Tailwind CSS
-- `src/utils/AppConfig.ts`: configuration file
-- `src/templates/Main.tsx`: default theme
 
 ### Deploy to production
 
@@ -102,19 +93,13 @@ You can create an optimized production build with:
 npm run build-prod
 ```
 
-Now, your blog is ready to be deployed. All generated files are located at `out` folder, which you can deploy with any hosting service.
+All generated files are located at `out` folder, which you can deploy with any hosting service.
 
-### Deploy to Netlify
 
-Clone this repository on own GitHub account and deploy to Netlify:
 
-[![Netlify Deploy button](https://www.netlify.com/img/deploy/button.svg)
+### Deployed with Vercel
 
-### Deploy to Vercel
-
-Deploy this Next JS Boilerplate on Vercel in one click:
-
-[![Deploy with Vercel](https://vercel.com/button)]
+[![Deployed with Vercel](https://lifecycle.vercel.app)]
 
 ### VSCode information (optional)
 
