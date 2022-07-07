@@ -25,7 +25,7 @@ import Electronics from './Electronics_Drop_Off_NYC';
 /// /////////////////////////////////////////////////////////////
 const libraries = ['places'];
 const mapContainerStyle = {
-  width: 'device-width',
+  width: '100%',
   // width: '80vh',
   height: '80vh',
   // position: 'absolute',

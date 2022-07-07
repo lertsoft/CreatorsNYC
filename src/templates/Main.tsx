@@ -79,11 +79,15 @@ const Main = (props: IMainProps) => (
           </nav>
         </div>
         <div className=" border-green-300 py-8 text-center text-sm">
-          © Copyright {new Date().getFullYear()} {AppConfig.title}. Created with{' '}
-          <span role="img" aria-label="Love">
-            ♥
-          </span>{' '}
-          by the Lifecycle team.
+          © Copyright {new Date().getFullYear()} {AppConfig.title}.
+          <div>
+            {' '}
+            Created with{' '}
+            <span role="img" aria-label="Love">
+              ♥
+            </span>{' '}
+            by the Lifecycle team.
+          </div>
         </div>
       </div>
     </div>
