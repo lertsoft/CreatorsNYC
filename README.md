@@ -1,41 +1,52 @@
 ## Lifecycle
 
-🚀 Boilerplate and Starter for Next.js, Tailwind CSS and TypeScript ⚡️ Made with developer experience first: Next.js, TypeScript, ESLint, Prettier, Husky, Lint-Staged, VSCode, Netlify, PostCSS, Tailwind CSS.
+### Home Page
 
-Clone this project and use it to create your own [Next.js](https://nextjs.org) project.
+![Hompage](Demo/lifecycleHome.png)
 
-### Features
+### FAQ Page
 
-Developer experience first:
+![Hompage](Demo/lifecycleFAQ.png)
 
-- 🔥 [Next.js](https://nextjs.org) for Static Site Generator
+### About Page
+
+![Hompage](Demo/lifecycleAbout.png)
+
+### Login Page
+
+![Hompage](Demo/lifecycleJoinus.png)
+
+** To do's **
+- Connect Amazon cognito or google firebase to login
+- Connect earth 911 API to the maps and markers
+- convert the maps component to typescript
+
+### Techstack
+
+- 🔥 [Next.js](https://nextjs.org) for Static Site Generator & server-side rendering
 - 🎨 Integrate with [Tailwind CSS](https://tailwindcss.com)
 - 💅 PostCSS for processing Tailwind CSS and integrated to `styled-jsx`
 - 🎉 Type checking [TypeScript](https://www.typescriptlang.org)
+- 🖥 [React.js](https://reactjs.org) for the front-end interface
 - ✅ Strict Mode for TypeScript and React 17
-- ✏️ Linter with [ESLint](https://eslint.org) (default NextJS, NextJS Core Web Vitals, Tailwind CSS and Airbnb configuration)
-- 💡 Absolute Imports
-- 🛠 Code Formatter with [Prettier](https://prettier.io)
 - 🦊 Husky for Git Hooks
 - 🚫 Lint-staged for running linters on Git staged files
-- 🗂 VSCode configuration: Debug, Settings, Tasks and extension for PostCSS, ESLint, Prettier, TypeScript
 - 🤖 SEO metadata, JSON-LD and Open Graph tags with Next SEO
-- ⚙️ [Bundler Analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
-- 🖱️ One click deployment with Vercel or Netlify (or manual deployment to any hosting services)
-- 🌈 Include a FREE minimalist theme
-- 💯 Maximize lighthouse score
+- ⚙️ [Earth 911 API](https://earth911.com)
+- 🗽 [NYC Open data](https://opendata.cityofnewyork.us)
+
+
 
 Built-in feature from Next.js:
 
 - ☕ Minify HTML & CSS
-- 💨 Live reload
 - ✅ Cache busting
 
 ### Philosophy
 
-- Minimal code
+- Minimal desgin
 - SEO-friendly
-- 🚀 Production-ready
+- 🚀 Mobile Friendliness
 
 ### Requirements
 
