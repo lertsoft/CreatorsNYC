@@ -1,6 +1,5 @@
 import { NextSeo } from 'next-seo';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
 import { AppConfig } from '@/utils/AppConfig';
 
@@ -11,7 +10,7 @@ type IMetaProps = {
 };
 
 const Meta = (props: IMetaProps) => {
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <>
@@ -22,7 +21,18 @@ const Meta = (props: IMetaProps) => {
           content="width=device-width,initial-scale=1"
           key="viewport"
         />
-        <link
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+        />
+        <meta name="lifecycle" content="The recycling apps that you need!" />
+        <meta name="theme-color" content="#000" />
+        <title>Lifecycle</title>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/recycling.png"></link>
+        {/* <link
           rel="apple-touch-icon"
           href={`${router.basePath}/recycling.png`}
           key="apple"
@@ -45,7 +55,7 @@ const Meta = (props: IMetaProps) => {
           rel="icon"
           href={`${router.basePath}/favicon.ico`}
           key="favicon"
-        />
+        /> */}
       </Head>
       <NextSeo
         title={props.title}

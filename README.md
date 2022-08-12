@@ -1,5 +1,7 @@
 ## Lifecycle
 
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?color=11E75A&lines=Lifecycle;Modern+Recycling+webapp;Built+in+NYC+to+the+world)](https://git.io/typing-svg)
+
 ### Home Page
 
 ![Hompage](Demo/lifecycleHome.png)
@@ -32,7 +34,7 @@
 - 🦊 Husky for Git Hooks
 - 🚫 Lint-staged for running linters on Git staged files
 - 🤖 SEO metadata, JSON-LD and Open Graph tags with Next SEO
-- ⚙️ [Earth 911 API](https://earth911.com)
+- ⚙️ [Earth 911 API](https://earth911.com) **They shutdown my API access**
 - 🗽 [NYC Open data](https://opendata.cityofnewyork.us)
 
 
@@ -75,6 +77,10 @@ Open http://localhost:3000 with your favorite browser to see your project.
 ├── public                   # Public folder
 │   └── assets
 │       └── images           # Image used by default template
+├── cypress                  # End-to-End testing.
+|   ├── e2e                  # Testing files
+|   ├── fixtures             # Tests mockup data
+|   └── support             
 ├── src
 |   ├── components           # App components
 |   |   └── maps             # Maps styles, data and functions
@@ -84,6 +90,8 @@ Open http://localhost:3000 with your favorite browser to see your project.
 │   ├── templates            # Default template
 │   └── utils                # Utility folder
 ├── tailwind.config.js       # Tailwind CSS configuration
+├── firebase-config.js       # firebase configuration
+├── cypress.config.js        # cypress configuration
 └── tsconfig.json            # TypeScript configuration
 ```
 
