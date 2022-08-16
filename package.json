@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@reach/combobox": "^0.17.0",
-    "@react-google-maps/api": "^2.12.0",
+    "@react-google-maps/api": "^2.12.1",
     "@types/google-map-react": "^2.1.7",
     "@types/react-router": "^5.1.18",
     "@types/react-router-dom": "^5.3.3",
