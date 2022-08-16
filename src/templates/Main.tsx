@@ -34,11 +34,11 @@ const Main = (props: IMainProps) => (
                 <a>FAQ</a>
               </Link>
             </li>
-            <li className="mx-5">
+            {/* <li className="mx-5">
               <Link href="/about">
                 <a>About </a>
               </Link>
-            </li>
+            </li> */}
             <li className="mr-5">
               <Link href="/login">
                 <a>Join Us</a>
@@ -65,11 +65,11 @@ const Main = (props: IMainProps) => (
                   <a>Home</a>
                 </Link>
               </li>
-              <li className="mx-4">
+              {/* <li className="mx-4">
                 <Link href="/about">
                   <a>About</a>
                 </Link>
-              </li>
+              </li> */}
               <li className="mx-4">
                 <Link href="/login">
                   <a>Join Us</a>
